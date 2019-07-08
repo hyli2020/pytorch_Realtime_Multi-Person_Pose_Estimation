@@ -183,11 +183,9 @@ class Cocokeypoints(Dataset):
                     heatmaps[:, :, i] = putGaussianMaps(
                         center, gaussian_map, params_transform=self.params_transform)
         # pafs
-        mid_1 = [2, 9, 10, 2, 12, 13, 2, 3, 4,
-                 3, 2, 6, 7, 6, 2, 1, 1, 15, 16]
+        mid_1 = [2, 9,  10, 2,  12, 13, 2, 3, 4, 3,  2, 6, 7, 6,  2, 1,  1,  15, 16]
 
-        mid_2 = [9, 10, 11, 12, 13, 14, 3, 4, 5,
-                 17, 6, 7, 8, 18, 1, 15, 16, 17, 18]
+        mid_2 = [9, 10, 11, 12, 13, 14, 3, 4, 5, 17, 6, 7, 8, 18, 1, 15, 16, 17, 18]
 
         thre = 1
         for i in range(19):

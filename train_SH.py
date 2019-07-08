@@ -72,7 +72,7 @@ params_transform['center_perterb_max'] = 40
 # === aug_flip ===
 params_transform['flip_prob'] = 0.5
 
-params_transform['np'] = 56
+params_transform['np'] = 56             # NOT used
 params_transform['sigma'] = 4.416
 params_transform['limb_width'] = 1.289
 
@@ -139,8 +139,7 @@ def train(train_loader, model, optimizer, epoch):
     meter_dict['min_ht'] = AverageMeter()    
     meter_dict['max_paf'] = AverageMeter()    
     meter_dict['min_paf'] = AverageMeter()
-    
-    
+
     # switch to train mode
     model.train()
 
@@ -160,7 +159,7 @@ def train(train_loader, model, optimizer, epoch):
         paf_mask = paf_mask.cuda()
         
         # compute output
-        _,saved_for_loss = model(img)
+        _, saved_for_loss = model(img)
         
         total_loss, saved_for_log = get_loss(saved_for_loss, heatmap_target, heat_mask,
                paf_target, paf_mask)
@@ -179,7 +178,7 @@ def train(train_loader, model, optimizer, epoch):
         end = time.time()
         if i % args.print_freq == 0:
             print_string = 'Epoch: [{0}][{1}/{2}]\t'.format(epoch, i, len(train_loader))
-            print_string +='Data time {data_time.val:.3f} ({data_time.avg:.3f})\t'.format( data_time=data_time)
+            print_string +='Data time {data_time.val:.3f} ({data_time.avg:.3f})\t'.format(data_time=data_time)
             print_string += 'Loss {loss.val:.4f} ({loss.avg:.4f})'.format(loss=losses)
 
             for name, value in meter_dict.items():
@@ -288,7 +287,10 @@ optimizer = torch.optim.SGD(trainable_vars, lr=args.lr,
                            weight_decay=args.weight_decay,
                            nesterov=args.nesterov)          
                                                     
-lr_scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.8, patience=5, verbose=True, threshold=0.0001, threshold_mode='rel', cooldown=3, min_lr=0, eps=1e-08)
+lr_scheduler = ReduceLROnPlateau(
+    optimizer, mode='min', factor=0.8, patience=5,
+    verbose=True, threshold=0.0001, threshold_mode='rel',
+    cooldown=3, min_lr=0, eps=1e-08)
 
 best_val_loss = np.inf
 

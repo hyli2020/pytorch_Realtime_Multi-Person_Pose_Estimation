@@ -223,8 +223,8 @@ def find_connected_joints(param, paf_upsamp, joint_list_per_joint_type, num_inte
                                               limb_intermed_coords[1, :], limb_intermed_coords[2:4, :]].T
 
                     score_intermed_pts = intermed_paf.dot(limb_dir)
-                    score_penalizing_long_dist = score_intermed_pts.mean(
-                    ) + min(0.5 * paf_upsamp.shape[0] / limb_dist - 1, 0)
+                    score_penalizing_long_dist = \
+                        score_intermed_pts.mean() + min(0.5 * paf_upsamp.shape[0] / limb_dist - 1, 0)
                     # Criterion 1: At least 80% of the intermediate points have
                     # a score higher than thre2
                     criterion1 = (np.count_nonzero(
@@ -348,7 +348,8 @@ def group_limbs_of_same_person(connected_limbs, joint_list):
     for index in people_to_delete[::-1]:
         person_to_joint_assoc.pop(index)
 
-    # Appending items to a np.array can be very costly (allocating new memory, copying over the array, then adding new row)
+    # Appending items to a np.array can be very costly
+    # (allocating new memory, copying over the array, then adding new row)
     # Instead, we treat the set of people as a list (fast to append items) and
     # only convert to np.array at the end
     return np.array(person_to_joint_assoc)

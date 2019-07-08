@@ -129,6 +129,7 @@ class Network(nn.Module):
                 if m.bias is not None:
                     nn.init.constant_(m.bias, 0)
 
+    # NOT USED
     def trainable_parameters(self):
         parameters = [
             {'params': self.cls_head_list.parameters(), 'lr_mult': 1.0},

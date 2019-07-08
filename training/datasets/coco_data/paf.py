@@ -28,7 +28,7 @@ def putVecMaps(centerA, centerB, accumulate_vec_map, count, params_transform):
     centerB = centerB / stride
     centerA = centerA / stride
 
-    limb_vec = centerB - centerA
+    limb_vec = centerB - centerA   # ????
     norm = np.linalg.norm(limb_vec)
     if (norm == 0.0):
         # print 'limb is too short, ignore it...'
